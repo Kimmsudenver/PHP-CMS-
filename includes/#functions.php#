@@ -1,0 +1,62 @@
+<?php
+function confirm_query($result_set){
+	if(!result_set) die("databse query failed.");
+}
+function find_all_subjects(){
+	global $connection;
+	//2. perform database query
+	$query = "SELECT * FROM subjects WHERE visible=1";
+	$query.= " ORDER BY position ASC"; 
+	$subject_set=mysqli_query($connection, $query);
+	confirm_query($subject_set);
+	return $subject_set;
+	
+	}
+
+function find_pages_for_subjects($subject_id){
+	global $connection;
+	
+	$query = "SELECT * FROM pages WHERE visible=1 and 
+				subject_id ={$subject_id} ";
+	$query.= "ORDER BY position ASC"; 
+	$page_set=mysqli_query($connection, $query);
+	confirm_query($page_set);
+	return $page_set;
+
+}
+function navigation(){
+	$output="<ul>";    
+			<?php $subject_set=find_all_subjects();	?>
+		<?php
+			//3. use return data (if any)
+		while($subject= mysqli_fetch_assoc($subject_set)){
+				//output data from each row
+		?>
+			$output.=<li>
+				<a href="manage_content.php?subject=<?php echo urlencode($subject["id"])?>"><?php echo $subject["menu_name"]; ?></a>
+				<?php 
+				$page_set= find_pages_for_subjects($subject["id"]);
+				?>
+				<ul class="pages">
+					<?php while($page = mysqli_fetch_assoc($page_set)){ ?>
+							<li> 
+												<a href="manage_content.php?page=<?php echo urlencode($page["id"]);?>"><?php echo $page["menu_name"]; ?></li>	
+							
+				
+					<?php } ?>
+					<?php
+						//4. release returned data
+						mysqli_free_result($page_set);
+					?>
+				</ul>
+			</li>
+			<?php }	?>
+			<?php
+			//4. release returned data
+			mysqli_free_result($subject_set);
+			?>
+		</ul>
+	
+	}
+
+?>
