@@ -21,7 +21,7 @@ function validate_max_length($fields){
 	global $errors;
 	foreach($fields as $field =>$max){
 		$value= trim($_POST[$field]);
-		if(!has_max_length($value))
+		if(!has_max_length($value,$max))
 				{$errors[$field]=ucfirst(str_replace("","_",$field))." is too long";}
 	}
 }
@@ -30,7 +30,7 @@ function validate_max_length($fields){
 function validate_presence($fields){
 	global $errors;
 	foreach($fields as $field){
-		$value=trim($_POST[$field]);
+		$value = trim($_POST[$field]);
 		if(!has_presence($value))
 			{$errors[$field]= ucfirst(str_replace("","_",$field)). " can not be blank";}
 	}

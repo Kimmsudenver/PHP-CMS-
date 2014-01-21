@@ -26,7 +26,7 @@
 		</label>
 		<br/>
 		<label>Position:
-		<select name="position:">
+		<select name="position">
 			<?php 
 			$subject_set=find_all_subjects();
 			$subject_count=mysqli_num_rows($subject_set);

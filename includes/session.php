@@ -3,9 +3,9 @@ session_start();
 
 function message(){
 if(isset($_SESSION["message"])){
-		$ouput= "<div class=\"message\">";
-		$ouput.=  htmlentities($_SESSION["message"]);
-		$ouput.=  "</div>";
+		$output = "<div class=\"message\">";
+		$output.=  htmlentities($_SESSION["message"]);
+		$output.=  "</div>";
 		
 		//clear message after use
 		$_SESSION["message"]=null;
